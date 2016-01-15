@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" integrity="sha512-dTfge/zgoMYpP7QbHy4gWMEGsbsdZeCXz7irItjcC3sPUFtf0kuFbDz/ixG7ArTxmDjLXDmezHubeNikyKGVyQ==" crossorigin="anonymous">
+    
+    <!-- my style tweaks -->
+    <link rel="stylesheet" href="main.css">
+</head>
+<body>
+    
+    <!-- Navbar -->
+    <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a href="index.html" class="navbar-brand">Jordan G. Dodson</a>
+            </div>
+            
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <li><a href="projects.html">Projects</a></li>
+                    <li><a href="resume.html">Resume</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    
+	<div class="container-fluid" style="width:90%;">
+        <div class="row">
+            <div id="plot-options" class="col-md-3 col-md-offset-0" style="border:solid;">
+                <button type="button" class="btn btn-default">Overview</button>
+                <button type="button" class="btn btn-default" onclick="changeImage('cumulative')">Cumulative</button>                    
+                <button type="button" class="btn btn-default" onclick="changeImage('subject_totals')">Subject Totals</button>
+                <button type="button" class="btn btn-default" onclick="changeImage('average_day')">Average Day</button>
+                <button type="button" class="btn btn-default" onclick="changeImage('subject_densities')">When I Study It</button>
+            </div>
+            <div id="dataview" class="col-md-8 col-md-offset-1" style="border:solid;">
+                <img id="plot" src="images/cumulative.png" class="img-responsive center-block" alt="Graph of hours spent programming.">
+            </div>
+        </div>
+	</div>
+    
+    <footer class="footer">
+        <div class="container">
+            
+        </div>
+    </footer>
+    <script src="books.json"></script>
+    <script>
+        function addSelector() {
+            var tab = document.createElement("table")            
+            tab.setAttribute("class", "table")
+            
+            tab.innerHTML = `<tr>
+                        <th class="text-center" colspan="3">Resolution</th>
+                    </tr>
+                    <tr>
+                        <td class="text-center"><button type="button" class="btn btn-default"
+                                                        onclick="changePlot('cum_sum_day')">Day</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-default"
+                                                        onclick="changePlot('cum_sum_month')">Month</button></td>
+                        <td class="text-center"><button type="button" class="btn btn-default"
+                                                        onclick="changePlot('cum_sum_year')">Year</button></td>
+                    </tr>`;
+            
+            // Remove all but first child
+            var opt = document.getElementById("plot-options");
+            var num = opt.childElementCount;
+            
+            for (var i = 0; i < num - 1; i++) {
+                opt.removeChild(opt.lastChild);
+            }
+            
+            // Append new element
+            opt.appendChild(tab);
+        }
+    
+        function changeImage(plot_name) {
+            document.getElementById("plot").src =  "images/".concat(plot_name.concat(".png"));
+        }
+        
+        function changePlot(new_plot) {
+            
+            var plot = document.createElement("img");
+            var dv = document.getElementById('dataview');
+            
+            // Clear the dataview
+            removeAllChildren(dv);
+            
+            s = "images/".concat(new_plot).concat(".png");
+            
+            // Set the image attributes
+            plot.src = s;
+            plot.alt = "Graph of hours spent programming.";
+            plot.setAttribute("class", "img-responsive center-block");
+            
+            // Add the image to the dataview
+            dv.appendChild(plot);
+        }
+        
+        function removeAllChildren(node) {
+            while (node.lastChild) {
+                node.removeChild(node.lastChild);
+            }
+        }
+        
+        function showBooks() {
+            var n = 10;
+            
+            var dv = document.getElementById("dataview");
+            var opt = document.getElementById("plot-options");
+            
+            // Remove all but first child in options
+            var num = opt.childElementCount;
+            for (var i = 0; i < num - 1; i++) {
+                opt.removeChild(opt.lastChild);
+            }
+            
+            // Remove all children in dataview
+            removeAllChildren(dv);
+            
+            
+            for (var i = 0; i < n; i++) {
+                var newNode = document.createElement("div");
+                newNode.innerHTML = books[i]['title'];
+                dv.appendChild(newNode);
+            }
+        }
+        
+        function bookStats(books) {
+            var stats = {'books' : 0, 'pages' : 0, 'authors' : 0};
+        }
+    </script>
+</body>
+</html>

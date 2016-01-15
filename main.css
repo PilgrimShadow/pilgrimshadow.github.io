@@ -1,0 +1,38 @@
+.navbar {
+    border-radius: 0em;
+}
+
+button {
+    width: 100%;
+}
+
+table {
+    border: none;
+}
+
+td {
+    border: none;
+}
+
+body {
+    background-color: rgb(247, 247, 247);
+}
+
+
+/* Sticky footer styling*/
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+  /* Margin bottom by footer height */
+  margin-bottom: 2em;
+}
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 2em;
+  background-color: rgb(26,26,26);
+}
